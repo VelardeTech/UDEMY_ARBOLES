@@ -10,6 +10,17 @@ struct Nodo {
 	Nodo* Izq;
 };
 Nodo* arbol = NULL;
+Nodo* CrearNodo(int);
+void Insertar(Nodo*&, int);
+void Menu();
+
+void Mostrar_Arbol(Nodo*, int);
+
+int main() {
+	Menu();
+	_getch(); return 0;
+}
+
 Nodo* CrearNodo(int n) {  //Funcion para crear un nuevo nodo
 	Nodo* nuevo_nodo = new Nodo; //Reservamos memoria
 	nuevo_nodo->dato = n;
@@ -35,10 +46,11 @@ void Insertar(Nodo*& arbol, int n) { //Funcion para insertar para elemento
 
 void Menu() {
 	cout << "\t-------------Menu---------------" << endl;
-	int dato, opc;
+	int dato, opc, cont = 0;
 	do {
 		cout << "\t  1. Insertar un nuevo nodo" << endl;
-		cout << "\t  2. Salir" << endl;
+		cout << "\t  2. Mostrar el arbol" << endl;
+		cout << "\t  3. Salir" << endl;
 		cout << "\t  Ingrese la opcion: "; cin >> opc;
 		switch (opc) {
 		case 1:cout << "Ingrese un numero: ", cin >> dato;
@@ -46,12 +58,25 @@ void Menu() {
 			cout << endl << endl;
 			system("pause"); system("cls");
 			break;
-		case 2: 
+		case 2: cout << "Mostrando el arbol completo" << endl;
+			Mostrar_Arbol(arbol, cont);
+			cout << endl << endl << endl;
+			system("pause"); system("cls");
 			break;
 		}
-	} while (opc != 2);
+	} while (opc != 3);
 }
-int main() {
-	Menu();
-	_getch(); return 0;
+
+void Mostrar_Arbol(Nodo* arbol, int cont) {
+	if (arbol == NULL) { //Si el arbol esta vacio
+		return;
+	}
+	else {
+		Mostrar_Arbol(arbol->Der, cont + 1);
+		for (int i = 0; i < cont; i++) {
+			cout << "   ";
+		}
+		cout << arbol->dato << endl;
+		Mostrar_Arbol(arbol->Izq, cont + 1);
+	}
 }
